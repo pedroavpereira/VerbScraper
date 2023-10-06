@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "VerbScrapper",
+  "version": "1.0",
+  "description": "Scrape verbs from",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://leconjugueur.lefigaro.fr/*"],
+      "js": ["content-script.js"]
+    }
+  ]
+}
