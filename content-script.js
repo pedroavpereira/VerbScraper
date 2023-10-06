@@ -33,3 +33,7 @@ const locArray = document.location.href.split("/");
 const verb = locArray[locArray.length - 1].replace(".html", "");
 
 localStorage.setItem(verb, JSON.stringify(data));
+
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  sendResponse(data);
+});
