@@ -1,3 +1,26 @@
+* {
+  box-sizing: border-box;
+}
+
+.form {
+  width: 200px;
+}
+
+.form input {
+  width: 60%;
+}
+
+.form button {
+  text-align: center;
+  width: 50%;
+  margin-left: 10px;
+  margin-right: 1px;
+  width: 20%;
+}
+
+.btn-data {
+  margin-top: 10px;
+}
 .btn-copy {
   width: auto;
   margin-top: 10px;
