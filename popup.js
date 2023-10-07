@@ -36,15 +36,14 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("Opened");
   const port = chrome.runtime.connect({ name: "retrieveVerbs" });
   port.postMessage({});
   port.onMessage.addListener(function (msg) {
-    console.log(msg);
     if (msg.content != null) {
       verbs.push(...msg.content);
     } else {
       console.log("no verbs");
     }
+    console.log(verbs);
   });
 });

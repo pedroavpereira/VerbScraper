@@ -25,11 +25,21 @@ chrome.runtime.onMessage.addListener(async function (
   sender,
   sendResponse
 ) {
-  console.log(request);
   verbs.push(request);
   if (query.length > 0) {
     const nextVerb = query.shift();
+    const [tab] = await chrome.tabs.query({
+      active: true,
+      lastFocusedWindow: true,
+    });
+    chrome.tabs.remove(tab.id);
     chrome.tabs.create({ url: `${url}/${nextVerb}.html` });
+  } else {
+    const [tab] = await chrome.tabs.query({
+      active: true,
+      lastFocusedWindow: true,
+    });
+    chrome.tabs.remove(tab.id);
   }
   sendResponse({});
 });
