@@ -1,9 +1,8 @@
 const main = document.querySelector("main").childNodes;
-// console.log(conjugations);
 
 const getConjugations = (el) => {
-  const DOMelement = el;
-  const title = el.querySelector(".tempsBloc");
+  const DOMelement = el.cloneNode(true);
+  const title = DOMelement.querySelector(".tempsBloc");
   DOMelement.removeChild(title);
   var htmlRegexG = /<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g;
   const conjugations = DOMelement.innerHTML.split("<br>").map((el) => {
@@ -34,6 +33,12 @@ const verb = locArray[locArray.length - 1].replace(".html", "");
 
 localStorage.setItem(verb, JSON.stringify(data));
 
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  sendResponse(data);
-});
+(async () => {
+  const response = await chrome.runtime.sendMessage(data);
+  // do something with response here, not outside the function
+  console.log(response);
+})();
+
+// chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+//   sendResponse(data);
+// });
