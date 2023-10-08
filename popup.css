@@ -2,16 +2,24 @@
   box-sizing: border-box;
 }
 
-li {
-  list-style: none;
+body {
+  width: 250px;
 }
 
-.form {
-  width: 200px;
+ul {
+  padding: 0;
+  height: 200px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+li {
+  padding: 10px;
+  list-style: none;
+  font-weight: bolder;
 }
 
 .form input {
-  width: 60%;
+  width: 100px;
 }
 
 .form button {

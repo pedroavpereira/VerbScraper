@@ -4,9 +4,15 @@ const query = [];
 
 const url = "https://leconjugueur.lefigaro.fr/french/verb";
 
+const clearVariables = () => {
+  verbs.length = 0;
+  errors.length = 0;
+};
+
 chrome.runtime.onConnect.addListener(function (port) {
   if (port.name === "getVerbs") {
     port.onMessage.addListener(function (msg) {
+      clearVariables();
       query.push(...msg.verbs);
       const firstVerb = query.shift();
       chrome.tabs.create({ url: `${url}/${firstVerb}.html` });
