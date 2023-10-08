@@ -28,14 +28,8 @@ form.addEventListener("submit", function (e) {
   if (!verb) return;
   verb.replaceAll(" ", "");
   const verbArrays = verb.split(",");
-  if (verbArrays.length === 1) {
-    query.push(verb);
-    createListElement(verb);
-  } else if (verbArrays.length > 1) {
-    query.push(...verbArrays);
-    verbArrays.forEach((el) => createListElement(el));
-  }
-
+  query.push(...verbArrays);
+  verbArrays.forEach((el) => createListElement(el));
   input.value = "";
   localStorage.setItem("query", JSON.stringify(query));
 });
