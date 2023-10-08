@@ -1,4 +1,5 @@
 const verbs = [];
+const errors = [];
 const query = [];
 
 const url = "https://leconjugueur.lefigaro.fr/french/verb";
@@ -14,8 +15,8 @@ chrome.runtime.onConnect.addListener(function (port) {
   }
   if (port.name === "retrieveVerbs") {
     port.onMessage.addListener(function (msg) {
-      const message = verbs.length > 0 ? verbs : null;
-      port.postMessage({ content: message });
+      console.log("retrieveVerbs");
+      port.postMessage({ content: verbs, errors });
     });
   }
 });
@@ -25,7 +26,13 @@ chrome.runtime.onMessage.addListener(async function (
   sender,
   sendResponse
 ) {
-  verbs.push(request);
+  if (request.error) {
+    errors.push(request.error);
+  } else {
+    verbs.push(request);
+  }
+  // verbs.push(request);
+
   if (query.length > 0) {
     const nextVerb = query.shift();
     const [tab] = await chrome.tabs.query({
@@ -35,11 +42,12 @@ chrome.runtime.onMessage.addListener(async function (
     chrome.tabs.remove(tab.id);
     chrome.tabs.create({ url: `${url}/${nextVerb}.html` });
   } else {
-    const [tab] = await chrome.tabs.query({
+    let [tab] = await chrome.tabs.query({
       active: true,
       lastFocusedWindow: true,
     });
     chrome.tabs.remove(tab.id);
+    chrome.tabs.create({ url: "results.html" });
   }
   sendResponse({});
 });

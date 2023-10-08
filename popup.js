@@ -1,20 +1,15 @@
 "use strict";
-const requestBtn = document.querySelector(".btn-data");
 const getVerbsBtn = document.querySelector(".btn-backbround__get--verbs");
-const copyBtn = document.querySelector(".btn-copy");
+const form = document.querySelector(".form-search");
+console.log(form);
 
-let conjugations;
-const query = ["aller", "devoir"];
-const verbs = [];
+const query = [];
 
-requestBtn.addEventListener("click", async function () {
-  const [tab] = await chrome.tabs.query({ active: true });
-  const response = await chrome.tabs.sendMessage(tab.id, {});
-
-  conjugations = JSON.stringify(response);
-
-  copyBtn.style = "";
-});
+const createListElement = (verb) => {
+  const parentElement = document.querySelector("ul");
+  const markup = `<li>${verb}</li>`;
+  parentElement.insertAdjacentHTML("afterbegin", markup);
+};
 
 getVerbsBtn.addEventListener("click", async function () {
   const port = chrome.runtime.connect({ name: "getVerbs" });
@@ -24,26 +19,22 @@ getVerbsBtn.addEventListener("click", async function () {
   });
 });
 
-copyBtn.addEventListener("click", function () {
-  navigator.clipboard.writeText(conjugations);
-  this.textContent = "Copied!!";
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  const verb = document.querySelector(".form-search input");
+  query.push(verb.value);
+  createListElement(verb.value);
+  verb.value = "";
 });
-
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  document.querySelector(".temp-paragraph").textContent =
-    JSON.stringify(request);
-  sendResponse({});
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-  const port = chrome.runtime.connect({ name: "retrieveVerbs" });
-  port.postMessage({});
-  port.onMessage.addListener(function (msg) {
-    if (msg.content != null) {
-      verbs.push(...msg.content);
-    } else {
-      console.log("no verbs");
-    }
-    console.log(verbs);
-  });
-});
+// document.addEventListener("DOMContentLoaded", function () {
+//   const port = chrome.runtime.connect({ name: "retrieveVerbs" });
+//   port.postMessage({});
+//   port.onMessage.addListener(function (msg) {
+//     if (msg.content != null) {
+//       verbs.push(...msg.content);
+//     } else {
+//       console.log("no verbs");
+//     }
+//     console.log(verbs);
+//   });
+// });

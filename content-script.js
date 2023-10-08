@@ -1,4 +1,9 @@
-const main = document.querySelector("main").childNodes;
+const main = document.querySelector("main");
+
+const mainChildNodes = main.childNodes;
+
+const locArray = document.location.href.split("/");
+const verb = locArray[locArray.length - 1].replace(".html", "");
 
 const getConjugations = (el) => {
   const DOMelement = el.cloneNode(true);
@@ -15,21 +20,22 @@ const getConjugations = (el) => {
 
 const data = {};
 let verbMode;
-main.forEach((el) => {
-  if (el.nodeName === "H2") {
-    data[el.textContent] = [];
-    verbMode = el.textContent;
-  }
-  if (el.classList.contains("conjugBloc") && el.childElementCount > 0) {
-    const name = `${el.querySelector(".tempsBloc").textContent}`;
-    const temp = {};
-    temp[name] = getConjugations(el);
-    data[verbMode].push(temp);
-  }
-});
-
-const locArray = document.location.href.split("/");
-const verb = locArray[locArray.length - 1].replace(".html", "");
+if (!main.querySelector("#propose")) {
+  mainChildNodes.forEach((el) => {
+    if (el.nodeName === "H2") {
+      data[el.textContent] = [];
+      verbMode = el.textContent;
+    }
+    if (el.classList.contains("conjugBloc") && el.childElementCount > 0) {
+      const name = `${el.querySelector(".tempsBloc").textContent}`;
+      const temp = {};
+      temp[name] = getConjugations(el);
+      data[verbMode].push(temp);
+    }
+  });
+} else {
+  data.error = verb;
+}
 
 localStorage.setItem(verb, JSON.stringify(data));
 
