@@ -1,0 +1,39 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  width: 250px;
+}
+
+ul {
+  padding: 0;
+  max-height: 200px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+li {
+  padding: 10px;
+  list-style: none;
+  font-weight: bolder;
+}
+
+.form input {
+  width: 100px;
+}
+
+.form button {
+  text-align: center;
+  width: 50%;
+  margin-left: 10px;
+  margin-right: 1px;
+  width: 20%;
+}
+
+.btn-data {
+  margin-top: 10px;
+}
+.btn-copy {
+  width: auto;
+  margin-top: 10px;
+}
