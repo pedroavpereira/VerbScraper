@@ -21,6 +21,7 @@ const updateErrors = (errors) => {
 const updateCode = (code) => {
   const element = document.querySelector(".results-code");
   element.textContent = JSON.stringify(code);
+  console.log(code);
 };
 
 const port = chrome.runtime.connect({ name: "retrieveVerbs" });
