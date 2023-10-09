@@ -53,7 +53,7 @@ chrome.runtime.onMessage.addListener(async function (
       lastFocusedWindow: true,
     });
     chrome.tabs.remove(tab.id);
-    chrome.tabs.create({ url: "results.html" });
+    chrome.tabs.create({ url: "results/results.html" });
   }
   sendResponse({});
 });
