@@ -6,10 +6,24 @@ const clearForm = document.querySelector(".form-clear");
 
 const query = [];
 
-const createListElement = (verb) => {
-  const markup = `<li>${verb}</li>`;
+const createListElement = (verb, i) => {
+  const markup = `<li class="verb" data-index="${i}">${verb}</li>`;
   listParentElement.insertAdjacentHTML("beforeend", markup);
 };
+
+const renderAllList = (arr) => {
+  arr.forEach((el, i) => createListElement(el, i));
+};
+
+listParentElement.addEventListener("click", function (e) {
+  const target = e.target.closest(".verb").dataset.index;
+
+  if (target) {
+    query.splice(target, 1);
+    this.innerHTML = "";
+    renderAllList(query);
+  }
+});
 
 getVerbsBtn.addEventListener("click", async function () {
   if (query.length > 0) {
@@ -29,7 +43,7 @@ form.addEventListener("submit", function (e) {
   verb.replaceAll(" ", "");
   const verbArrays = verb.split(",");
   query.push(...verbArrays);
-  verbArrays.forEach((el) => createListElement(el));
+  renderAllList(query);
   input.value = "";
   localStorage.setItem("query", JSON.stringify(query));
 });
@@ -46,7 +60,5 @@ clearForm.addEventListener("click", function () {
     query.push(...JSON.parse(localStorage.getItem("query")));
   }
 
-  query.forEach((el) => {
-    createListElement(el);
-  });
+  renderAllList(query);
 })();

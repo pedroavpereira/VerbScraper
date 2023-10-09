@@ -7,18 +7,26 @@
     <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
-    <ul></ul>
+    <h1>VerbScrapper</h1>
     <div class="form">
       <form class="form-search" action="">
-        <input type="text" name="verb" autocomplete="off" />
+        <input
+          type="text"
+          name="verb"
+          autocomplete="off"
+          placeholder="Insert Verb"
+        />
         <button type="submit" class="form-submit" autocomplete="off">
           Add
         </button>
-        <button class="form-clear">Clear</button>
       </form>
     </div>
-    <p class="temp-paragraph"></p>
-    <button class="btn-backbround__get--verbs">Get Verbs</button>
+    <ul></ul>
+    <div class="container-action--buttons">
+      <button class="btn-backbround__get--verbs">Get Verbs</button>
+      <button class="form-clear">Clear</button>
+    </div>
+
     <script src="popup.js" defer></script>
   </body>
 </html>
