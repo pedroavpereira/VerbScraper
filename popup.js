@@ -6,12 +6,17 @@ const clearForm = document.querySelector(".form-clear");
 
 const query = [];
 
+const saveLocalStorage = () => {
+  localStorage.setItem("query", JSON.stringify(query));
+};
+
 const createListElement = (verb, i) => {
   const markup = `<li class="verb" data-index="${i}">${verb}</li>`;
   listParentElement.insertAdjacentHTML("beforeend", markup);
 };
 
 const renderAllList = (arr) => {
+  listParentElement.innerHTML = "";
   arr.forEach((el, i) => createListElement(el, i));
 };
 
@@ -22,6 +27,7 @@ listParentElement.addEventListener("click", function (e) {
     query.splice(target, 1);
     this.innerHTML = "";
     renderAllList(query);
+    saveLocalStorage();
   }
 });
 
@@ -29,9 +35,10 @@ getVerbsBtn.addEventListener("click", async function () {
   if (query.length > 0) {
     const port = chrome.runtime.connect({ name: "getVerbs" });
     port.postMessage({ verbs: query });
-    port.onMessage.addListener(function (msg) {
-      console.log(msg);
-    });
+    // No messages are expected to be received by popup
+    //   port.onMessage.addListener(function (msg) {
+    //
+    //   });
   }
 });
 
@@ -45,14 +52,13 @@ form.addEventListener("submit", function (e) {
   query.push(...verbArrays);
   renderAllList(query);
   input.value = "";
-  localStorage.setItem("query", JSON.stringify(query));
+  saveLocalStorage();
 });
 
 clearForm.addEventListener("click", function () {
   localStorage.clear();
   listParentElement.innerHTML = "";
   query.length = 0;
-  console.log(query);
 });
 
 (function () {
