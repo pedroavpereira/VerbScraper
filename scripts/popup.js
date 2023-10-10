@@ -35,21 +35,20 @@ getVerbsBtn.addEventListener("click", async function () {
   if (query.length > 0) {
     const port = chrome.runtime.connect({ name: "getVerbs" });
     port.postMessage({ verbs: query });
-    // No messages are expected to be received by popup
-    //   port.onMessage.addListener(function (msg) {
-    //
-    //   });
   }
 });
 
 form.addEventListener("submit", function (e) {
   e.preventDefault();
   const input = document.querySelector(".form-search input");
-  const verb = input.value;
+  let verb = input.value;
   if (!verb) return;
-  verb.replaceAll(" ", "");
-  const verbArrays = verb.split(",");
-  query.push(...verbArrays);
+  const verbs = verb.split(",");
+  const normalizedVerbs = verbs.map((el) => {
+    const trim = el.trim();
+    return trim.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  });
+  query.push(...normalizedVerbs);
   renderAllList(query);
   input.value = "";
   saveLocalStorage();
