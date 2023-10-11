@@ -1,4 +1,5 @@
 const locArray = document.location.href.split("/");
+//replace %20 is sometimes required because inputs are normalized on popup.js
 const verb = locArray[locArray.length - 1]
   .replace(".html", "")
   .toLowerCase()
@@ -52,21 +53,17 @@ const data = { name: verb };
   };
 
   let verbMode;
-  if (!main.querySelector("#propose")) {
-    mainChildNodes.forEach((el) => {
-      if (el.nodeName === "H2") {
-        verbMode = el.textContent.toLowerCase();
-        if (verbMode === "similar verbs") return true;
-        data[verbMode] = {};
-      }
-      if (el.classList.contains("conjugBloc") && el.childElementCount > 0) {
-        const name = el.querySelector(".tempsBloc").textContent.toLowerCase();
-        data[verbMode][name] = getConjugations(el);
-      }
-    });
-  } else {
-    data.error = verb;
-  }
+  mainChildNodes.forEach((el) => {
+    if (el.nodeName === "H2") {
+      verbMode = el.textContent.toLowerCase();
+      if (verbMode === "similar verbs") return true;
+      data[verbMode] = {};
+    }
+    if (el.classList.contains("conjugBloc") && el.childElementCount > 0) {
+      const name = el.querySelector(".tempsBloc").textContent.toLowerCase();
+      data[verbMode][name] = getConjugations(el);
+    }
+  });
 
   localStorage.setItem(verb, JSON.stringify(data));
 
