@@ -12,7 +12,6 @@ const data = { name: verb };
     (async () => {
       const response = await chrome.runtime.sendMessage(data);
       // do something with response here, not outside the function
-      console.log(response);
     })();
     return;
   }
@@ -24,7 +23,6 @@ const data = { name: verb };
   const conjugationObject = (conjugationArr) => {
     const conjugationsObj = {};
     conjugationArr.forEach((el, i) => {
-      console.log(el);
       if (el.startsWith("j'")) {
         conjugationsObj[i + 1] = el.slice(el.indexOf("j'") + 1);
       } else {
@@ -70,7 +68,6 @@ const data = { name: verb };
   (async () => {
     const response = await chrome.runtime.sendMessage(data);
     // do something with response here, not outside the function
-    console.log(response);
   })();
 })();
 
