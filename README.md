@@ -1,7 +1,7 @@
 # VerbScraper
-Chrome extension designed automatically scrape and turn all the verb conjugations into a JSON string using a list of user inputed verbs, this chrome extenison uses the website https://leconjugueur.lefigaro.fr/ to collect its data by traversing its DOM and collecting the relevant information.
+Chrome extension is designed to automatically scrape and turn all the verb conjugations into a JSON string using a list of user-inputted verbs, This Chrome extension uses the website https://leconjugueur.lefigaro.fr/ to collect its data by traversing its DOM and collecting the relevant information.
 ## Goal
-This extension was created to facilitate data collection of these verbs for a future language memorization application's database (Duolingo style), and as a learning developer, learning the basics of chrome extensions seemed like an exciting learning exercise. Maybe it's true what they say, programmers will spend hours coding automating a task! 
+This extension was created to facilitate data collection of these verbs for a future language memorization application's database (Duolingo style), and as a learning developer, learning the basics of Chrome extensions seemed like an exciting learning exercise. Maybe it's true what they say, programmers will spend hours coding just to automate a task! 
 
 ## Usage
 After clicking on the extension icon use the popup to input every verb intended to be scrapped.
@@ -11,15 +11,15 @@ After clicking on the extension icon use the popup to input every verb intended 
 - Individual verbs
 - Multiple verbs separated by a comma
 
-The multiple verbs entry is extremely helpfull with automatization, enabling the use of an AI tool like chatGPT to give you a list of the most common french verbs separated by a comma and then it becomes a simple copy and paste task
+The multiple verbs entry is extremely helpful with automatization, enabling the use of an AI tool like chatGPT to give you a list of the most common French verbs separated by a comma and then it becomes a simple copy-and-paste task
 
 ## Functionality
-The application works in 5 step:
-1 All the verbs are inputed by the user and the "Get verbs" button is pressed
-2 The extension service worker will receive a query Array with the verbs
-3 The service worker opens a new tab with the first verb of the query and injects a script designed to scrape the necessary data, closing the tab afterwards
-4 Step 3 is repeated until all the verbs in the query string have been scrapped
-5 When completed a results page is opened with the scrapped data as well as any possible verbs that were not scrapped by any reason.
+The application works in 5 steps:
+1. All the verbs are entered by the user and the "Get verbs" button is pressed
+2. The extension service worker will receive a query Array with the verbs
+3. The service worker opens a new tab with the first verb of the query and injects a script designed to scrape the necessary data, closing the tab afterward
+4. Step 3 is repeated until all the verbs in the query string have been scrapped
+5. When completed a results page is opened with the scrapped data as well as any possible verbs that were not scrapped for any reason.
 
 #### Results page look 
 
@@ -30,7 +30,7 @@ The application works in 5 step:
 
 The data scrapped is an array of objects where every verb is put into its object of nested objects with the mode of the verb followed by its tense: eg. `object.indicative.present`
 
-#### Example of data scrapped for verb "Être" (to be)
+#### Example of data scrapped for the verb "Être" (to be)
 ```
 [{"name":"etre",
 "indicative":
@@ -67,9 +67,9 @@ The data scrapped is an array of objects where every verb is put into its object
 ```
 
 ## Possible improvements
-- [ ] Improve CSS on popup (primarely deleting entries style)
+- [ ] Improve CSS on popup (especially the delete functionalities UI)
 - [ ] Possibly change data structure if necessary in the future
 - [ ] Enable scraping other aspects of the language 
-- [ ] Enable scrapping from other french conjugation websites
+- [ ] Enable scrapping from other French conjugation websites
 
-Although some improvements can be made, this project will be left archived for the foreseable future, since it was designed to be exclusively a tool or a stepping stone into the french learning project mentioned above.
+Although some improvements can be made, this project will be left archived for the foreseeable future, since it was designed to be exclusively a tool or a stepping stone into the French learning project mentioned above.
