@@ -9,13 +9,32 @@ const clearVariables = () => {
   errors.length = 0;
 };
 
+const getActiveTab = async () => {
+  return await chrome.tabs.query({
+    active: true,
+    lastFocusedWindow: true,
+  });
+};
+
+const injectScript = async (tabId) => {
+  await chrome.scripting.executeScript({
+    target: { tabId: tabId },
+    files: ["scripts/content-script.js"],
+  });
+};
+
 chrome.runtime.onConnect.addListener(function (port) {
   if (port.name === "getVerbs") {
-    port.onMessage.addListener(function (msg) {
+    port.onMessage.addListener(async function (msg) {
+      debugger;
       clearVariables();
       query.push(...msg.verbs);
       const firstVerb = query.shift();
-      chrome.tabs.create({ url: `${url}/${firstVerb}.html` });
+      const tabCreated = await chrome.tabs.create({
+        url: `${url}/${firstVerb}.html`,
+      });
+      injectScript(tabCreated.id);
+
       port.postMessage({ content: "Background received" });
     });
   }
@@ -31,6 +50,7 @@ chrome.runtime.onMessage.addListener(async function (
   sender,
   sendResponse
 ) {
+  debugger;
   if (request.error) {
     errors.push(request.error);
   } else {
@@ -39,19 +59,17 @@ chrome.runtime.onMessage.addListener(async function (
   // verbs.push(request);
 
   if (query.length > 0) {
+    debugger;
     const nextVerb = query.shift();
-    const [tab] = await chrome.tabs.query({
-      active: true,
-      lastFocusedWindow: true,
+    const [activeTab] = await getActiveTab();
+    chrome.tabs.remove(activeTab.id);
+    const tabCreated = await chrome.tabs.create({
+      url: `${url}/${nextVerb}.html`,
     });
-    chrome.tabs.remove(tab.id);
-    chrome.tabs.create({ url: `${url}/${nextVerb}.html` });
+    injectScript(tabCreated.id);
   } else {
-    let [tab] = await chrome.tabs.query({
-      active: true,
-      lastFocusedWindow: true,
-    });
-    chrome.tabs.remove(tab.id);
+    const [activeTab] = await getActiveTab();
+    chrome.tabs.remove(activeTab.id);
     chrome.tabs.create({ url: "results/results.html" });
   }
   sendResponse({});
