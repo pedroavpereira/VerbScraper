@@ -1,5 +1,5 @@
 # VerbScraper
-Chrome extension is designed to automatically scrape and turn all the verb conjugations into a JSON string using a list of user-inputted verbs, This Chrome extension uses the website https://leconjugueur.lefigaro.fr/ to collect its data by traversing its DOM and collecting the relevant information.
+This Chrome extension is designed to automatically scrape and turn all the verb conjugations into a JSON string using a list of user-inputted verbs, This Chrome extension uses the website https://leconjugueur.lefigaro.fr/ to collect its data by traversing its DOM and collecting the relevant information.
 ## Goal
 This extension was created to facilitate data collection of these verbs for a future language memorization application's database (Duolingo style), and as a learning developer, learning the basics of Chrome extensions seemed like an exciting learning exercise. Maybe it's true what they say, programmers will spend hours coding just to automate a task! 
 
