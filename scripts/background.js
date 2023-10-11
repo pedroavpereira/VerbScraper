@@ -21,7 +21,6 @@ chrome.runtime.onConnect.addListener(function (port) {
   }
   if (port.name === "retrieveVerbs") {
     port.onMessage.addListener(function (msg) {
-      console.log("retrieveVerbs");
       port.postMessage({ content: verbs, errors });
     });
   }
